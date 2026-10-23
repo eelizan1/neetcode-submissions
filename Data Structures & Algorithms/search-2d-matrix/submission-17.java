@@ -1,0 +1,49 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        // search row 
+        int row = searchRow(matrix, target); 
+        if (row == -1) return false; 
+
+        return binarySearch(matrix[row], target); 
+    }
+
+    private int searchRow(int[][] matrix, int target) {
+        int left = 0; 
+        int right = matrix.length - 1; 
+
+        while (left <= right) {
+            int mid = (left + right) / 2; 
+            int rowStartVal = matrix[mid][0]; 
+            int rowEndVal = matrix[mid][matrix[mid].length - 1]; 
+
+            if (rowStartVal <= target && rowEndVal >= target) {
+                return mid; 
+            } else if (rowStartVal < target) {
+                left = mid + 1; 
+            } else if (rowEndVal > target) {
+                right = mid - 1; 
+            }
+        }
+
+        return -1; 
+    }
+
+    private boolean binarySearch(int[] row, int target) {
+        int left = 0; 
+        int right = row.length - 1; 
+
+        while (left <= right) {
+            int mid = (left + right) / 2; 
+
+            if (row[mid] == target) {
+                return true; 
+            } else if (row[mid] < target) {
+                left = mid + 1; 
+            } else {
+                right = mid - 1; 
+            }
+        }
+
+        return false; 
+    }
+}
